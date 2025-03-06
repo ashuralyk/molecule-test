@@ -297,8 +297,9 @@ impl Verification<Context> for PveSettlement {
             .to_opt()
             .ok_or(ScriptError::WitnessOutputTypeNotSet)?
             .unpack();
-        let pve_witness: PveWitness = serde_molecule::from_slice(&output_type, false)
-            .map_err(|_| ScriptError::BrokenPveWitnessMolecule)?;
+        let pve_witness: PveWitness =
+            serde_molecule::from_slice(&output_type, false) // change false to true can reduce a huge binary size
+                .map_err(|_| ScriptError::BrokenPveWitnessMolecule)?;
 
         // Prepare game runtime to replay operations
         let Some(_pve_session_data) = ctx.pve_session_data.as_ref() else {
