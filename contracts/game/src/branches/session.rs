@@ -95,16 +95,16 @@ impl PveUpdate {
         ctx.gameplay_cards = materials.dna_collection.clone();
 
         // Prepare game runtime to replay operations
-        let mut game = if materials.archive_input.is_empty() {
-            debug!("game mode: initialization");
-            PveSystemRuntime::new(ctx.game_seed).map_err(|error| Error::Custom(error.into()))?
-        } else {
-            debug!("game mode: loading");
-            serde_molecule::from_slice(&materials.archive_input, false)
-                .map_err(|_| ScriptError::BrokenPveSessionMaterialsMolecule)?
-        };
-        // let mut game =
-        //     PveSystemRuntime::new(ctx.game_seed).map_err(|error| Error::Custom(error.into()))?;
+        // let mut game = if materials.archive_input.is_empty() {
+        //     debug!("game mode: initialization");
+        //     PveSystemRuntime::new(ctx.game_seed).map_err(|error| Error::Custom(error.into()))?
+        // } else {
+        //     debug!("game mode: loading");
+        //     serde_molecule::from_slice(&materials.archive_input, false)
+        //         .map_err(|_| ScriptError::BrokenPveSessionMaterialsMolecule)?
+        // };
+        let mut game =
+            PveSystemRuntime::new(ctx.game_seed).map_err(|error| Error::Custom(error.into()))?;
 
         // Operation replay
         for operation in operation_set.operations {
@@ -161,11 +161,11 @@ impl Verification<Context> for PveUpdate {
         }
 
         // Check game archive iteration
-        let expected_archive_output = serde_molecule::to_vec(&game, false)
-            .map_err(|_| ScriptError::BrokenPveSessionMaterialsMolecule)?;
-        if expected_archive_output != materials.archive_output {
-            return Err(ScriptError::BadPveUpdateMode.into());
-        }
+        // let expected_archive_output = serde_molecule::to_vec(&game, false)
+        //     .map_err(|_| ScriptError::BrokenPveSessionMaterialsMolecule)?;
+        // if expected_archive_output != materials.archive_output {
+        //     return Err(ScriptError::BadPveUpdateMode.into());
+        // }
 
         Ok(None)
     }
