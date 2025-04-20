@@ -1,0 +1,19 @@
+[package]
+edition = "2021"
+name = "game-core"
+version = "0.1.7"
+
+[dependencies]
+common = { path = "../common", features = ["card", "enemy", "operation", "player", "effect"] }
+database = { path = "../database" }
+serde = { version = "1.0", default-features = false, features = ["derive"] }
+serde_molecule = { workspace = true }
+
+serde_json = { version = "1.0", default-features = false, features = ["alloc"], optional = true }
+wasm-bindgen = { version = "0.2", optional = true}
+
+[features]
+default = []
+replay = []
+debug = ["common/debug"]
+log = ["serde_json"]

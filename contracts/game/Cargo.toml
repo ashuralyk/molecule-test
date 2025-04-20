@@ -1,0 +1,12 @@
+[package]
+name = "game"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1.0", default-features = false, features = ["derive"] }
+serde_molecule = { workspace = true }
+ckb-cinnabar-verifier = { workspace = true }
+
+common = { path = "../../core/common", features = ["contract"] }
+game-core = { path = "../../core/game" }

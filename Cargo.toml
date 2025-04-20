@@ -1,0 +1,42 @@
+[workspace]
+resolver = "2"
+
+members = [
+  # Please don't remove the following line, we use it to automatically
+  # detect insertion point for newly generated crates.
+  # @@INSERTION_POINT@@
+  "core/database",
+  "core/common",
+  "core/game",
+  "contracts/game",
+]
+
+[workspace.dependencies]
+ckb-cinnabar = {git = "https://github.com/ashuralyk/ckb-cinnabar"}
+ckb-cinnabar-calculator = {path = "https://github.com/ashuralyk/ckb-cinnabar"}
+ckb-cinnabar-verifier = {git = "https://github.com/ashuralyk/ckb-cinnabar"}
+# ckb-cinnabar-verifier = { path = "../../ckb-cinnabar/cinnabar/verify" }
+# ckb-cinnabar = { path = "../../ckb-cinnabar/cinnabar" }
+serde_molecule = {version = "1.1.2", default-features = false, features = ["alloc"]}
+# serde_molecule = { git = "https://github.com/XuJiandong/serde_molecule", rev = "b810e7c", default-features = false, features = ["alloc"] }
+
+[package]
+default-run = "runner"
+edition = "2021"
+name = "runner"
+version = "0.1.0"
+
+[dependencies]
+ckb-cinnabar = {workspace = true}
+
+[[bin]]
+name = "runner"
+path = "src/main.rs"
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = 'z'
+overflow-checks = true
+panic = 'abort'
+strip = true
